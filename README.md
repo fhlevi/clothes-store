@@ -37,20 +37,20 @@ Clothes Store is app for create your Online Store
 ## Screenshots
   <p align="center">
     <span>
-      <img src="https://imgur.com/SX8IXvp" width="250px" />
+      <img src="https://imgur.com/SX8IXvp.jpg" width="250px" />
       &nbsp;&nbsp;
-      <img src="https://imgur.com/doEadI8" width="250px" />
+      <img src="https://imgur.com/doEadI8.jpg" width="250px" />
       &nbsp;&nbsp;
-      <img src="https://imgur.com/zpH6p2V" width="250px" />
+      <img src="https://imgur.com/zpH6p2V.jpg" width="250px" />
     </span>
   </p>
 <p align="center">
     <span>
-      <img src="https://imgur.com/gxQEFy7" width="250px" />
+      <img src="https://imgur.com/gxQEFy7.jpg" width="250px" />
       &nbsp;&nbsp;
-      <img src="https://imgur.com/VVxaxkC" width="250px" />
+      <img src="https://imgur.com/VVxaxkC.jpg" width="250px" />
       &nbsp;&nbsp;
-      <img src="https://imgur.com/OOvQzLB" width="250px" />
+      <img src="https://imgur.com/OOvQzLB.jpg" width="250px" />
     </span>
   </p>
   
