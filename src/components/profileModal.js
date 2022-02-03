@@ -37,9 +37,9 @@ function FooterSection (props) {
 
                         tempData = {}
                     }
+                } else {
+                    payload.name = value
                 }
-                
-                payload.name = value
             }
         })
         
@@ -121,14 +121,14 @@ function BodySection (props) {
                                     )}
                                     name={"nameAddress_"+idx}
                                 />
-                                {errors["nameAddress_"+idx] && <Text style={ProfileStyle.errorText}>Nama Alamat wajib diisi.</Text>}
                                 {formColumn.length > 1 && 
                                     <TouchableOpacity style={ProfileStyle.btnTrash} onPress={() => handleRemoveItem(idx)}>
                                         <Icon name="trash" size={15} color={theme.colors.light.foreground} />
                                     </TouchableOpacity>
                                 }
                             </View>
-
+                            {errors["nameAddress_"+idx] && <Text style={ProfileStyle.errorText}>Nama Alamat wajib diisi.</Text>}
+                            
                             <Controller 
                                 control={control}
                                 rules={{
