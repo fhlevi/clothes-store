@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
+// Library
 import { View, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { useForm, Controller  } from "react-hook-form";
-
-import {ProfileStyle} from '../style';
-
-import * as theme from '../constants/theme';
+import tailwind from 'tailwind-rn';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+// style
+import {ProfileStyle} from '../style';
+// constants
+import * as theme from '../constants/theme';
+// layout
 import Header from './layout/header';
 import Wrapper from './layout/wrapper';
-
+// store
 import {ProfileStore} from '../store';
 
 function FooterSection (props) {
@@ -58,8 +60,8 @@ function FooterSection (props) {
     }
 
     return (
-        <TouchableOpacity style={ProfileStyle.btnContainer} onPress={handleSubmit(handleSaveAddress)}>
-            <Text style={ProfileStyle.btnText}>Simpan</Text>
+        <TouchableOpacity style={[ProfileStyle.btnContainer, tailwind('p-4 items-center justify-center flex-row')]} onPress={handleSubmit(handleSaveAddress)}>
+            <Text style={[ProfileStyle.btnText, tailwind('font-bold text-sm')]}>Simpan</Text>
         </TouchableOpacity>    
     )
 }
@@ -91,7 +93,9 @@ function BodySection (props) {
                         <TextInput
                             onChangeText={onChange}
                             defaultValue={profiles.name}
-                            style={[ProfileStyle.input, (errors.name && ProfileStyle.errorBorder)]}
+                            style={[
+                                ProfileStyle.input, tailwind('rounded-lg p-2 mt-3 h-10'), (errors.name && ProfileStyle.errorBorder)
+                            ]}
                             placeholder="Masukan Nama"
                         />
                     )}
@@ -104,8 +108,8 @@ function BodySection (props) {
                 >
                     <Text style={ProfileStyle.label}>Daftar Alamat</Text>
                     {formColumn.map((_formColumn, idx) => (
-                        <View style={{ marginBottom: 10 }} key={idx}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={tailwind('mb-3')} key={idx}>
+                            <View style={tailwind('items-center justify-center flex-row')}>
                                 <Controller 
                                     control={control}
                                     rules={{
@@ -115,14 +119,19 @@ function BodySection (props) {
                                         <TextInput
                                         onChangeText={onChange}
                                         defaultValue={_formColumn["nameAddress_"+idx]}
-                                        style={[ProfileStyle.input, (errors["nameAddress_"+idx] && ProfileStyle.errorBorder)]}
+                                        style={[
+                                            ProfileStyle.input, tailwind('rounded-lg p-2 mt-3 h-10'), (errors["nameAddress_"+idx] && ProfileStyle.errorBorder)
+                                        ]}
                                         placeholder={_formColumn.placeholderInput}
                                         />
                                     )}
                                     name={"nameAddress_"+idx}
                                 />
                                 {formColumn.length > 1 && 
-                                    <TouchableOpacity style={ProfileStyle.btnTrash} onPress={() => handleRemoveItem(idx)}>
+                                    <TouchableOpacity 
+                                        style={ProfileStyle.btnTrash} 
+                                        onPress={() => handleRemoveItem(idx)}
+                                    >
                                         <Icon name="trash" size={15} color={theme.colors.light.foreground} />
                                     </TouchableOpacity>
                                 }
@@ -152,8 +161,11 @@ function BodySection (props) {
                         </View>
                     )
                 )}
-                <TouchableOpacity style={ProfileStyle.addressBtn} onPress={() => handleCreateForm()}>
-                    <Text style={ProfileStyle.btnText}>Tambah Alamat</Text>
+                <TouchableOpacity 
+                    style={[ProfileStyle.addressBtn, tailwind('items-center justify-center flex-row p-4')]} 
+                    onPress={() => handleCreateForm()}
+                >
+                    <Text style={[ProfileStyle.btnText, tailwind('font-bold text-sm')]}>Tambah Alamat</Text>
                 </TouchableOpacity>    
             </View>
         </>

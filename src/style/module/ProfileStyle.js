@@ -3,8 +3,7 @@ import * as theme from '../../constants/theme';
 
 const ProfileStyle = StyleSheet.create({ 
     container: {
-      flex: 1,
-      backgroundColor: theme.colors.light.background
+      flex: 1
     },
     sectionForm: {
       marginTop: 15,
@@ -23,12 +22,8 @@ const ProfileStyle = StyleSheet.create({
       color: theme.colors.lightGreen
     },
     input: {
-        height: 40,
-        marginTop: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 8,
-        flex: 1,
+      borderWidth: 1,
+      flex: 1,
     },
     errorBorder: {
         borderColor: 'red'
@@ -56,44 +51,28 @@ const ProfileStyle = StyleSheet.create({
         marginLeft: 15
     },
     bodyContainer: {
-      flex: 1,
-      padding: 20
+      flex: 1
     },
     footerContainer: {
-      padding: 20,
-      backgroundColor: theme.colors.light.background,
       elevation: 18,
       borderTopColor: '#eaeaea',
-      borderTopWidth: 1
+      borderTopWidth: 1,
+      backgroundColor: '#fff'
     },
     btnContainer: {
-        padding: 15,
         borderRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: theme.colors.lightGrey,
-        flexDirection: 'row',
+        backgroundColor: theme.colors.lightGrey
     },
     addressBtn: {
-        padding: 15,
         borderRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: theme.colors.lightGrey,
-        flexDirection: 'row',
     },
     btnText: {
-        fontWeight: 'bold',
-        fontSize: theme.sizes.h3,
         color: theme.colors.lightGreen,
     },
     cardAddress: {
-      padding: 10,
       borderWidth: 1,
       borderColor: '#ddd',
-      height: 80,
-      borderRadius: 8,
-      marginBottom: 15,
       active: {
         borderColor: theme.colors.gray
       }

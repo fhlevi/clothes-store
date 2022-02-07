@@ -4,61 +4,24 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    FlatList
+    ScrollView
 } from 'react-native';
+import tailwind from 'tailwind-rn';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as theme from '../constants/theme';
-import {toRupiah} from '../helper/stringToCurrency';
 import {CartStore} from '../store';
 import {ProductDetailStyle} from './../style';
 import InputQty from './layout/InputQty';
 
 const ProductModal = (props) => {
     const {background} = props.item
-    const [productSize, setProductSize] = useState(props.item.size)
     const [qty, setQty] = useState(1)
     const setCart = CartStore((state) => state.setCart)
-    const cart = CartStore((state) => state.cart)
 
-    const handleChangeSize = (size) => {
-        const sizeActive = productSize.map(items => {
-            if(size == items.name) {
-                return {
-                    ...items,
-                    active: true
-                }
-            }
-
-            return {
-                ...items,
-                active: false
-            } 
-        })
-
-        setProductSize(sizeActive)
-    }
-
-    const transalateColors = (isActive) => {
-        if(isActive) {
-            return background
-        }
-
-        return null
-    }
-    const getPriceWithSize = () => {
-        const data = productSize.find(_productSize => _productSize.active)
-        
-        return toRupiah(data.price)
-    }
     const handleSaveToCart = () => {
-        const size = productSize.find(_productSize => _productSize.active)
-
         const dataPrepare = {
             ...props.item,
-            price: size.price,
-            size: productSize,
-            sizeSelected: size,
             qty: qty
         }
 
@@ -69,50 +32,51 @@ const ProductModal = (props) => {
     }
     
     return (
-        <View style={{flex: 1}}>
+        <View style={ProductDetailStyle.container}>
             <View style={[ProductDetailStyle.container, {backgroundColor: background}]}>
                 {/* Header */}
-                <View style={ProductDetailStyle.header}>
+                <View style={tailwind('h-20 p-5 flex-row items-center justify-between')}>
                     <TouchableOpacity onPress={props.closeModal}>
                         <Icon name="keyboard-arrow-left" size={30} color={theme.colors.light.foreground} />
                     </TouchableOpacity>
                 </View>
 
                 {/* Body */}
-                <View style={ProductDetailStyle.imgContainer}>
-                    <Image source={props.item.image} style={{width: 220, height: 220}} />
+                <View style={[ProductDetailStyle.imgContainer,tailwind('items-center justify-center')]}>
+                    <Image source={{uri: props.item.image}} style={tailwind('w-56 h-56')} />
                 </View>
                 <View style={ProductDetailStyle.detailsContainer}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={productSize}
-                            numColumns={3}
-                            keyExtractor={item => item.id}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity 
-                                    style={[ProductDetailStyle.sizeCircleContainer, {backgroundColor: transalateColors(item.active)}]} 
-                                    onPress={() => handleChangeSize(item.name)}>
-                                        <Text>{item.name}</Text>
-                                </TouchableOpacity>
-                            )} 
-                        />
-                        <Text style={ProductDetailStyle.priceText}>{getPriceWithSize()}</Text>
-                    </View>
-                    <Text style={ProductDetailStyle.descriptionText}>{props.item.description}</Text>
-                    <InputQty handleQuantity={handleQuantity} />
+                    <ScrollView>
+                        <View style={tailwind('flex-row justify-between items-center')}>
+                            <Text style={ProductDetailStyle.priceText}>${props.item.price}</Text>
+                        </View>
+                        <Text style={ProductDetailStyle.descriptionText}>{props.item.description}</Text>
+                        <InputQty handleQuantity={handleQuantity} />
+                    </ScrollView>
                 </View>
 
                 {/* Footer */}
-                <View style={ProductDetailStyle.footerContainer}>
-                    <TouchableOpacity style={[ProductDetailStyle.btnContainer, {marginRight: 10, borderColor: background}]}>
+                <View style={[tailwind('p-5 flex-row'), {backgroundColor: 'white'}]}>
+                    <TouchableOpacity style={[
+                        tailwind('p-4 items-center justify-center'), ProductDetailStyle.btnContainer, 
+                        {
+                            marginRight: 10, 
+                            borderColor: background
+                        }
+                    ]}>
                         <Icon name="bookmark" size={30} color={background} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[ProductDetailStyle.btnContainer, {flex: 1,backgroundColor: background, borderColor: background}]}
+                        style={[
+                            tailwind('p-4 items-center justify-center'), ProductDetailStyle.btnContainer, ProductDetailStyle.container,
+                            {
+                                backgroundColor: background, 
+                                borderColor: background
+                            }
+                        ]}
                         onPress={() => handleSaveToCart()}
                     >
-                        <Text style={ProductDetailStyle.btnText}>ADD TO CARD</Text>
+                        <Text style={[ProductDetailStyle.btnText, tailwind('font-bold text-lg')]}>ADD TO CARD</Text>
                     </TouchableOpacity>
                 </View>
             </View>

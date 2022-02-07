@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { View, FlatList, Text, TouchableOpacity, Modal } from 'react-native';
 import ProductBagComponent from '../components/productBagComponent';
 import {CartStore} from '../store';
-import {toRupiah} from '../helper/stringToCurrency';
 import PaymentModal from '../components/paymentModal';
 import {CartStyle} from '../style';
 import {SnackBar} from './../components/snackBar';
@@ -59,7 +58,7 @@ function Cart() {
             <View style={CartStyle.footerContainer}>
                 <View>
                     <Text>Total:</Text>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{toRupiah(totalProductPrice())}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>${totalProductPrice()}</Text>
                 </View>
                 <TouchableOpacity style={CartStyle.btnContainer} onPress={() => handleOpenModal()}>
                     <Text style={CartStyle.btnText}>Bayar</Text>

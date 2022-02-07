@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import {  StyleSheet, View, Text, Image, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Modal } from 'react-native'
+import tailwind from 'tailwind-rn';
 
 import ProductModal from './productModal';
-import * as theme from '../constants/theme';
-import {toRupiah} from '../helper/stringToCurrency';
+import {ellipsis} from '../helper/stringFunctions';
 
 const ProductComponent = ({item}) => {
     const [productVisible, setProductVisible] = useState(false)
@@ -14,7 +14,7 @@ const ProductComponent = ({item}) => {
     return(
         <TouchableOpacity 
             onPress={() => ToggleProductVisible()}
-            style={[styles.container, {backgroundColor: item.background}]}>
+            style={[tailwind("flex-1 p-3 m-1 rounded-lg"), {backgroundColor: item.background}]}>
 
                 <Modal 
                     animationType="slide" 
@@ -24,38 +24,14 @@ const ProductComponent = ({item}) => {
                 </Modal>
                 
                 <View>
-                    <Text style={styles.title}>{item.name}</Text>
-                    <Text style={styles.subTitle}>{toRupiah(item.price)}</Text>
-                    <View style={styles.imgContainer}>
-                        <Image source={item.image} style={{width: 100, height: 100}} />
+                    <Text style={tailwind('font-bold text-base')}>{ellipsis(item.title, 20)}</Text>
+                    <Text style={tailwind('text-base')}>${item.price}</Text>
+                    <View style={tailwind('p-5 mb-6 items-center justify-center')}>
+                        <Image source={{uri: item.image}} style={{width: 100, height: 100}} />
                     </View>
                 </View>
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-        margin: 5,
-        borderRadius: 10,
-    },
-    title: {
-        fontWeight: 'bold',
-        fontSize: theme.sizes.h3,
-        color: theme.colors.light.foreground
-    },
-    subTitle: {
-        fontSize: theme.sizes.h3,
-        color: theme.colors.light.foreground
-    },
-    imgContainer: {
-        padding: 20,
-        marginBottom: 30,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-})
 
 export default ProductComponent

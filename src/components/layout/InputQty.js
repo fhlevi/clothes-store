@@ -1,8 +1,10 @@
 import React, {useState,useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import {ProductDetailStyle} from './../../style';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Snackbar from 'react-native-snackbar';
+import tailwind from 'tailwind-rn';
+
+import {ProductDetailStyle} from './../../style';
 
 function InputQty(props) {
     const {background,handleQuantity} = props;
@@ -41,16 +43,16 @@ function InputQty(props) {
     }
 
     return ( 
-        <View style={ProductDetailStyle.quantityContainer}>
+        <View style={[ProductDetailStyle.quantityContainer, tailwind('justify-between items-center flex-row')]}>
             <TouchableOpacity 
-                style={ProductDetailStyle.quantityContainer.buttonQty} 
+                style={ProductDetailStyle.buttonQty} 
                 onPress={() => handleDecrement()}
             >
                 <Icon name="minus" size={30} color={background} />
             </TouchableOpacity>
             <Text>{qty}</Text>
             <TouchableOpacity 
-                style={ProductDetailStyle.quantityContainer.buttonQty}
+                style={ProductDetailStyle.buttonQty}
                 onPress={() => handleIncrement()}
             >
                 <Icon name="plus" size={30} color={background} />

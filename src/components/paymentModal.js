@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useForm, Controller  } from "react-hook-form";
 import {View,Text,StyleSheet,TouchableOpacity,ActivityIndicator} from 'react-native';
 import PickerSelect from 'react-native-picker-select';
+import tailwind from 'tailwind-rn';
 
 import * as theme from '../constants/theme'
 
@@ -45,8 +46,8 @@ const FormSection = ({ control, errors }) => {
 
     return (
         <>
-            <View style={styles.formContainer}>
-                <Text style={styles.labelForm}>Pilih Alamat</Text>
+            <View style={tailwind('mt-3')}>
+                <Text style={tailwind('font-bold text-lg')}>Pilih Alamat</Text>
                 <Controller 
                     control={control}
                     rules={{
@@ -65,8 +66,8 @@ const FormSection = ({ control, errors }) => {
                 {errors.address && <Text style={styles.textError}>Alamat wajib diisi.</Text>}
             </View>
 
-            <View style={styles.formContainer}>
-                <Text style={styles.labelForm}>Pilih Kurir</Text>
+            <View style={tailwind('mt-3')}>
+                <Text style={tailwind('font-bold text-lg')}>Pilih Kurir</Text>
                 <Controller 
                     control={control}
                     rules={{
@@ -85,8 +86,8 @@ const FormSection = ({ control, errors }) => {
                 {errors.courier && <Text style={styles.textError}>Kurir wajib diisi.</Text>}
             </View>
             
-            <View style={styles.formContainer}>
-                <Text style={styles.labelForm}>Pilih Metode Pembayaran</Text>
+            <View style={tailwind('mt-3')}>
+                <Text style={[tailwind('font-bold text-lg'), styles.btnText]}>Pilih Metode Pembayaran</Text>
                 <Controller 
                     control={control}
                     rules={{
@@ -120,12 +121,12 @@ const FooterSection = ({ handleSubmit, setIsSuccess }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.btnContainer} onPress={handleSubmit(onSubmit)}>
+        <TouchableOpacity style={[styles.btnContainer, tailwind('items-center justify-center flex-row p-4')]} onPress={handleSubmit(onSubmit)}>
             {
                 isLoading ? 
                     <ActivityIndicator /> 
                 : 
-                    <Text style={styles.btnText}>Bayar Sekarang</Text>
+                    <Text style={tailwind('font-bold text-base')}>Bayar Sekarang</Text>
 
             }
         </TouchableOpacity>
@@ -166,24 +167,11 @@ const PaymentModal = (props) => {
 
 const styles = StyleSheet.create({
     btnContainer: {
-        padding: 15,
         borderRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
         backgroundColor: theme.colors.lightGrey
     },
     btnText: {
-        fontWeight: 'bold',
-        fontSize: theme.sizes.h3,
         color: theme.colors.lightGreen
-    },
-    labelForm: {
-        fontWeight: 'bold',
-        fontSize: 17
-    },
-    formContainer: {
-        marginTop: 10
     },
     textError: {
         color: '#FF483B'

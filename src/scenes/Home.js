@@ -1,36 +1,52 @@
-import React, {useState} from 'react'
-import {  StyleSheet, View, Modal, Text, TouchableOpacity, TextInput, FlatList } from 'react-native'
-
-import * as theme from '../constants/theme';
+// Library
+import React, {useState, useEffect} from 'react'
+import {  View, Modal, Text, TextInput, FlatList } from 'react-native';
+import { useQuery } from "react-query";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import tailwind from 'tailwind-rn';
+// Components
 import ProductComponent from '../components/productsComponents';
-
 import BagModal from '../components/bagModal';
-
-import * as Products from '../constants/products';
+// styles
+import * as theme from '../constants/theme';
 
 const currentTheme = theme.colors.light;
 
-const Home = () => {
+function HomePage () {
+    const { data, isLoading } = useQuery("products", () => fetch('https://fakestoreapi.com/products').then(res=>res.json()))
     const [bagVisible, setBagVisible] = useState(false)
-    const [productList, setProductList] = useState(Products.clothes)
+    const [productList, setProductList] = useState([])
 
+    useEffect(() => {
+        if(!isLoading) {
+            const dataMap = mappingBackground(data)
+            setProductList(dataMap)
+        }
+    }, [isLoading])
+
+    const mappingBackground = (value) => {
+        return value?.map((_data, i) => {
+            return {
+                ..._data,
+                background: '#ddd'
+            }
+        })
+    }
     const ToggleBagVisible = () => {
         setBagVisible(!bagVisible)
     }
     const handleFilterProduct = (val) => {
         if(val.length) {
-            let productSearch = Products.clothes.filter(_filter => (_filter.name.toLowerCase().includes(val.toLowerCase())))
+            const productSearch = data?.filter(_filter => (_filter.title.toLowerCase().includes(val.toLowerCase())))
 
-            setProductList(productSearch)
+            setProductList(mappingBackground(productSearch))
         } else {
-            setProductList(Products.clothes)
+            setProductList(mappingBackground(data))
         }
     }
 
     return(
-        <View style={{flex: 1}}>
+        <View style={tailwind('flex-1')}>
             <Modal 
                 animationType="slide" 
                 visible={bagVisible}
@@ -38,27 +54,27 @@ const Home = () => {
                     <BagModal closeModal={() => ToggleBagVisible()} />
             </Modal>
 
-            <View style={styles.container}>
+            <View style={tailwind('px-3 flex-1')}>
                 {/* Header */}
-                <View style={styles.headerContainer}>
+                <View style={tailwind('pt-4 flex-row items-center justify-between')}>
                     <View>
-                        <Text style={styles.titleText}>Clothes Store</Text>
-                        <Text style={styles.subTitleText}>find the best choices for you</Text>
+                        <Text style={tailwind('font-bold text-xl')}>Clothes Store</Text>
+                        <Text style={tailwind('text-sm text-gray-600')}>find the best choices for you</Text>
                     </View>
                 </View>
 
                 {/* Search */}
-                <View style={styles.searchContainer}>
+                <View style={tailwind('pl-2 mt-5 flex-row items-center rounded bg-gray-200')}>
                     <Icon name="search" color={theme.colors.gray} size={25} />
                     <TextInput 
-                    style={styles.textInputContainer} 
+                    style={tailwind('flex-1')} 
                     placeholder="Search.." 
                     onChangeText={(value) => handleFilterProduct(value)}
                     placeholderTextColor={theme.colors.gray} />
                 </View>
 
                 {/* Body */}
-                <View style={styles.bodyContainer}>
+                <View style={tailwind('flex-1 mt-5')}>
                     <FlatList
                     showsVerticalScrollIndicator={false}
                         data={productList}
@@ -73,71 +89,13 @@ const Home = () => {
                 </View>
             </View>
         </View>
-            
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingLeft: 12,
-        paddingRight: 12,
-        backgroundColor: currentTheme.background
-    },
-    // Header Style
-    headerContainer: {
-        paddingTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    badgeContainer: {
-        top: -9, 
-        right: -4,
-        width: 18,
-        height: 18,
-        borderColor: '#FFFFFF',
-        borderRadius: 10,
-        borderWidth: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute', 
-        backgroundColor: theme.colors.green
-    },
-    badgeText: {
-        color: theme.colors.light.background,
-        fontSize: 12
-    },
-    titleText: {
-        fontWeight: 'bold',
-        fontSize: theme.sizes.h5
-    },
-    subTitleText: {
-        fontSize: theme.sizes.h3,
-        color: theme.colors.gray
-    },  
-    iconCaontainer: {
-        padding: 10,
-        borderRadius: 30,
-        backgroundColor: currentTheme.foreground
-    },
-    // Search Style
-    searchContainer: {
-        paddingLeft: 10,
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderRadius: 5,
-        backgroundColor: theme.colors.clouds
-    },
-    textInputContainer: {
-        flex: 1
-    },
-    // Body Style
-    bodyContainer: {
-        flex: 1,
-        marginTop: 20,
-    }
-})
+function Home () {
+    return (
+        <HomePage />
+    )
+}
 
 export default Home

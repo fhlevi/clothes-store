@@ -31,9 +31,7 @@ const styles = StyleSheet.create({
         color: theme.colors.light.foreground
     },
     imgContainer: {
-        flex: 2,
-        alignItems: 'center',
-        justifyContent: 'center'
+        flex: 2
     },
     counSection: {
         flex: 1
@@ -73,15 +71,10 @@ const styles = StyleSheet.create({
         backgroundColor: theme.colors.light.background
     },
     btnContainer: {
-        padding: 15,
         borderRadius: 15,
-        alignItems: 'center',
-        justifyContent: 'center',
         borderWidth: 1,
     },
     btnText: {
-        fontWeight: 'bold',
-        fontSize: theme.sizes.h3,
         color: theme.colors.lightGreen,
     },
     quantityContainer: {
@@ -90,14 +83,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 50,
         width: 150,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        buttonQty: {
-            padding: 5,
-            borderRadius: 50,
-            backgroundColor: '#eaeaea'
-        }
+    },
+    buttonQty: {
+        padding: 5,
+        borderRadius: 50,
+        backgroundColor: '#eaeaea'
     }
 });
 
